@@ -21,9 +21,10 @@ function addNewBookForm(){
   let title = document.getElementById("formTitle").value
   let author = document.getElementById("formAuthor").value
   let pages = document.getElementById("formPages").value
-  let read = document.getElementById("formRead").value
-
-  const newBook = new Book(title,author,pages,read.toUpperCase().charAt(0) =="N" || read.length == 0?"No":"Yes")
+  let read = document.getElementById("formRead").checked
+  console.log(read)
+  read = read?"Yes":"No"
+  const newBook = new Book(title,author,pages,read)
   myLibrary.push(newBook)
   addNewRow(newBook)
   document.getElementById("form").style.display = 'none'
@@ -68,18 +69,35 @@ function addNewRow(Book){
  
   idx = myLibrary.length
   const removeButton = document.createElement("button")
-  removeButton.innerHTML = `Remove ${Book.id}`
+  removeButton.innerHTML = `Remove ${Book.title}`
   removeButton.setAttribute("onclick",`removeBook(${Book.id})`)  
   removeButton.class = "removeButton"
+
+  const readButton = document.createElement("button")
+  readButton.innerHTML = `Read ${Book.title}`
+  readButton.setAttribute("onclick",`readBook(${Book.id})`)
+  removeButton.class = 'Read Button'
 
   newRow.appendChild(titleCell)
   newRow.appendChild(authorCell)
   newRow.appendChild(pagesCell)
   newRow.appendChild(readCell)
   newRow.appendChild(removeButton)
+  newRow.appendChild(readButton)
 
   const table = document.getElementById('tbody') 
   table.append(newRow)
+}
+
+function readBook(id){
+  for (let i = 0; i < myLibrary.length; i++) {
+    const element = myLibrary[i];
+    if(element.id == id){
+      element.isRead = element.isRead == 'Yes'?"No":"Yes"
+    }
+    
+  }
+  display()
 }
 
 function addNewBook(){
