@@ -1,0 +1,16 @@
+body{
+  background-color: black;
+}
+table{
+  background-color: white;
+  border: 5px solid grey;
+}
+
+td{
+  text-align: center;
+  padding-right: 15px;
+}
+
+label{
+  color: white;
+}

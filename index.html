@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script type="text/javascript" src="./script.js" defer ></script>
+    <title></title>
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <form id = "form">
+      <div>  
+        <label for=":title">Enter the name of the book</label>
+        <input type="text" name="title" id="formTitle" value="title">
+      </div>
+      <div>
+        <label for=":author">Enter the name of the author</label>
+        <input type="text" name="author" id="formAuthor" value="author">
+      </div>
+      <div>
+        <label for="pages">Enter the Number of Pages</label>
+        <input type="number" name="pages" id="formPages" value="0">
+      </div>
+      <div>
+        <label for="read">Is the book read</label>
+        <input type="checkbox" name="read" id="formRead" value="">
+      </div>
+      <button type="button" onclick="addNewBookForm()">Submit</button>
+      <button type="reset">Reset the Form</button>
+        
+    </form>
+    <button type="" onclick="showForm()">Add New Book</button>
+    <table id = "table">
+      <thead>
+        <td>Book Title</td>      
+        <td>Author Name</td>
+        <td>Total Pages</td>
+        <td>Already Read</td>
+      </thead>
+
+    </table>
+  
+  </body>
+</html>
