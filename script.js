@@ -1,17 +1,13 @@
-const myLibrary = [{
-  title: "b1",
-  author: "a1",
-  pages: 123,
-  isRead: true,
-  id: 0
-}]
+var idx = 0
+const myLibrary = []
 
-function Book(title,author,pages,isRead,id){
+function Book(title,author,pages,isRead){
   this.title = title 
   this.author = author
   this.pages = pages
   this.isRead = isRead
-  this.id = id
+  this.id = idx + 1
+  idx += 1
   this.info = function (){
     if(isRead){
       return `${title} by ${author}, ${pages},read`
@@ -27,7 +23,7 @@ function addNewBookForm(){
   let pages = document.getElementById("formPages").value
   let read = document.getElementById("formRead").value
 
-  const newBook = new Book(title,author,pages,read.toUpperCase().charAt(0) =="N" || read.length == 0?"No":"Yes",myLibrary.length)
+  const newBook = new Book(title,author,pages,read.toUpperCase().charAt(0) =="N" || read.length == 0?"No":"Yes")
   myLibrary.push(newBook)
   addNewRow(newBook)
   document.getElementById("form").style.display = 'none'
@@ -38,18 +34,23 @@ function addBookToLibrary(){
   let author = prompt("Enter the name of the author")
   let pages = prompt("Enter the number of pages in the book")
   let read = prompt("Is the Book already read (Y/N)")
-  myLibrary.push(new Book(title,author,pages,read,myLibrary.length)) 
+  myLibrary.push(new Book(title,author,pages,read))
 }
-
 function removeBook(id){
-  for (let i = 0; i < myLibrary.length; i++) {
-    const element = myLibrary[i];
-    if(element.id = id){
+  if(myLibrary.length == 1){
+    myLibrary.splice(0,1) 
+    display()
+    return;
+  }
+  let i;
+  for (i = 0; i < myLibrary.length; i++) {
+    let element = myLibrary[i];
+    if(element.id == id){
+      myLibrary.splice(i,1)
       break;
     }
   }
-  myLibrary.splice(i,1)
-}
+  display() }
 
 function addNewRow(Book){
   const newRow = document.createElement("tr")
@@ -67,8 +68,8 @@ function addNewRow(Book){
  
   idx = myLibrary.length
   const removeButton = document.createElement("button")
-  removeButton.innerHTML = `Remove ${myLibrary.length}`
-  removeButton.setAttribute(onclick,`removeBook(${idx}`)  
+  removeButton.innerHTML = `Remove ${Book.id}`
+  removeButton.setAttribute("onclick",`removeBook(${Book.id})`)  
   removeButton.class = "removeButton"
 
   newRow.appendChild(titleCell)
@@ -77,10 +78,8 @@ function addNewRow(Book){
   newRow.appendChild(readCell)
   newRow.appendChild(removeButton)
 
-  const table = document.getElementById('table') 
+  const table = document.getElementById('tbody') 
   table.append(newRow)
-
-  console.log(Book)
 }
 
 function addNewBook(){
@@ -88,12 +87,19 @@ function addNewBook(){
   addNewRow(myLibrary.at(-1)) 
 }
 
-function showForm(){
- document.getElementById("form").style.display = "block"
+function display(){
+  const tablebody = document.getElementById('tbody')
+  tablebody.innerHTML = ""
+  for (let i = 0; i < myLibrary.length; i++) {
+    addNewRow(myLibrary[i])
+  }
 }
 
-for (let i = 0; i < myLibrary.length; i++) {
- addNewRow(myLibrary[i]) 
+function showForm(){
+  const form = document.getElementById('form')
+  form.style.display = form.style.display == "block"? "none":"block"
 }
+
+display()
 document.getElementById("form").style.display = "none"
 
